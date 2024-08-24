@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::paginate(5);
         return view('dashboard.role.list')->with('roles', $roles);
     }
 
@@ -25,7 +25,6 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.role.add');
     }
 
@@ -40,15 +39,13 @@ class RoleController extends Controller
         //
         $data =  $request->all();
         $request->validate([
-           'name' => 'required',
-           'status' => 'required|numeric'
-           // Add more validation rules for other form fields
+            'name' => 'required|string|max:255|unique:roles',
+            'status' => 'required|numeric'
        ]);
    
        Role::create([
         'name' => $request->input('name'),
         'status' => $request->input('status'),
-        // Add more fields as needed
         ]);
         return redirect()->route('admin-role-list')->with('success', 'Form submitted successfully!');
     }
@@ -61,7 +58,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return view('dashboard.role.add', compact('role'));
     }
 
     /**
@@ -70,9 +68,24 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        
+        if ($id) {
+            $role = Role::findOrFail($id);
+            $request->validate([
+               'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+               'status' => 'required|numeric'
+            ]);
+           
+            $role->update([
+                  'name' => $request->input('name'),
+                  'status' => $request->input('status'),
+            ]);
+            return redirect()->route('admin-role-list')->with('success', 'Role updated successfully');
+         } else {
+            return view('dashboard.role.add');
+         }
     }
 
     /**
@@ -95,6 +108,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $role = Role::findOrFail($id);
+       $role->delete();
+       return redirect()->route('admin-role-list')->with('success', 'Role deleted successfully');
     }
 }

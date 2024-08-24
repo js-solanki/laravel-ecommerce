@@ -64,7 +64,8 @@
                                                     <td>{{$role->name}}</td>
                                                     <td>{{$role->status ? ' active ': ' inactive '}}</td>
                                                     <td class="font-weight-medium">
-                                                        <div class="badge badge-success">Completed</div>
+                                                        <a class="badge badge-info" href="{{ route('admin-role-edit', $role->id) }}" >edit</a>
+                                                        <a class="badge badge-danger"  href="{{ route('admin-role-delete', $role->id) }}" >delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -73,6 +74,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div>{{ $roles->links() }}</div>
                                 </div>
                             </div>
                         </div>

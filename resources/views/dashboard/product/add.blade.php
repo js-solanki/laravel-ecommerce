@@ -48,7 +48,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
-                                <form method="POST" class="forms-sample" action="{{ route('admin-insert-role') }}">
+                                <form method="POST" class="forms-sample" action="{{ isset($product) ? route('admin-update-catgeory', $product->id) : route('admin-insert-product') }}"  enctype="multipart/form-data">
                                    @csrf
                                    <!-- <p class="card-description">
                                     
@@ -57,7 +57,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">Name</label>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Product Name">
+                                                <input type="text" class="form-control" id="name" name="product_name" placeholder="Product Name">
                                             </div>
                                         
                                             <div class="form-group">
@@ -75,7 +75,7 @@
                                             
                                             <div class="form-group">
                                                 <label>Product Category</label>
-                                                <select class="js-example-basic-multiple w-100" multiple="multiple">
+                                                <select class="js-example-basic-multiple w-100" multiple="multiple" name="category_ids[]">
                                             
                                                 @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -84,7 +84,12 @@
                                             </div>
 
                                             <div class="form-group">
+                                            <button type="button" class="btn btn-danger btn-icon-text">
+                                                <i class="ti-upload btn-icon-prepend"></i>                                                    
+                                                Upload
                                                 <input type="file" name="images[]" multiple><br>
+                                            </button>
+                                                
                                             </div>
                                         </div>
                                         <div class="col-md-6 ">
@@ -103,23 +108,21 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="brand">Brand</label>
-                                                <input type="text" class="form-control" id="brand"  name="brand" placeholder="Brand" required>
+                                                <input type="text" class="form-control" id="brand"  name="brand" placeholder="Brand" required >
                                             </div>
                                             <div class="form-group">
                                                 <label for="brand">Manufacturer</label>
-                                                <input type="text" class="form-control" id="manufacturer"  name="manufacturer" placeholder="Manufacturer" required>
+                                                <input type="text" class="form-control" id="manufacturer"  name="manufacturer" placeholder="Manufacturer" >
                                             </div>
                                             <div class="form-group">
                                                 <label for="SKU">SKU</label>
-                                                <input type="text" class="form-control" id="SKU"  name="sku" placeholder="SKU">
+                                                <input type="text" class="form-control" id="SKU"  name="sku" placeholder="SKU" required>
                                             </div>   
                                         </div>
                                     </div>
-                                </form>
-                                 
                                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                     <button type="button" class="btn btn-light">Cancel</button>
-                                    
+                                </form>        
                                 </div>
                             </div>
                         </div>

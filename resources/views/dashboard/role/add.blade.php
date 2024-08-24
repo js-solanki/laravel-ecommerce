@@ -51,17 +51,18 @@
                                     <p class="card-description">
                                         Basic form layout
                                     </p>
-                                    <form method="POST" class="forms-sample" action="{{ route('admin-insert-role') }}">
+                                    
+                                    <form method="POST" class="forms-sample" action="{{ isset($role) ? route('admin-update-role', $role->id) : route('admin-insert-role') }}">
                                     @csrf
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">name</label>
-                                            <input type="text" class="form-control" id="exampleInputUsername1" name="name" placeholder="Username">
+                                            <input type="text" class="form-control" id="exampleInputUsername1" name="name" placeholder="Username" value="{{ isset($role) ? $role->name : '' }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Status</label>
                                             <select class="form-control form-control-lg" name="status" id="exampleFormControlSelect1">
-                                                <option value="1">Active</option>
-                                                <option value="0">inActive</option>
+                                                <option value="1" {{ (isset($role) && $role->status == 1) ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ (isset($role) && $role->status == 0) ? 'selected' : '' }}>inActive</option>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>

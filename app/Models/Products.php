@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
 
 class Products extends Model
 {
@@ -23,4 +24,9 @@ class Products extends Model
     protected $casts = [
         'images' => 'array', // JSON field cast to array
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+    }
 }

@@ -24,5 +24,6 @@
   <link rel="shortcut icon" href="{{ asset('dashboard/images/favicon.png') }}" />
   <!-- <link rel="stylesheet" href="../../vendors/select2/select2.min.css"> -->
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css"> -->
 </head>

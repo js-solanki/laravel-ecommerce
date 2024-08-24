@@ -29,3 +29,4 @@
 <script src="{{ asset('dashboard/js/typeahead.js') }}"></script>
 
 <!-- End custom js for this page-->
+
