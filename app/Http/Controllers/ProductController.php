@@ -14,10 +14,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $products = Products::with('categories')->paginate(5);
+        $search = $request->input('search');
+
+        // $products = Products::with('categories')->paginate(5);
+        $products = Products::where('product_name', 'like', "%{$search}%")
+        ->orWhere('description', 'like', "%{$search}%")
+        ->paginate(5);
         return view('dashboard.product.list')->with('products', $products);
     }
 

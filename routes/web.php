@@ -7,6 +7,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ChatController;
+use App\Events\MessageSent;
+use Illuminate\Http\Request;
+use App\Models\ChatRoom;
+use App\Models\Message;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,7 +63,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin'], function() {
         Route::get('/create', [ProductController::class,'create'])->name('admin-add-product');
         Route::post('/store', [ProductController::class,'store'])->name('admin-insert-product');
         Route::post('/update/{id}', [ProductController::class,'edit'])->name('admin-update-product');    
-        Route::get('/edit/{id}', [ProductController::class,'show'])->name('admin-product-edit'); 
+    Route::get('/edit/{id}', [ProductController::class,'show'])->name('admin-product-edit'); 
         Route::get('/delete/{id}', [ProductController::class,'destroy'])->name('admin-product-delete');
         Route::get('/detail/{id}', [ProductController::class,'detail'])->name('admin-product-detail');
     });
@@ -72,4 +78,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin'], function() {
         Route::post('/update/{id}', [RoleController::class,'edit'])->name('admin-update-role');    
               
     });
+
+
+    Route::post('/chat-send-message', [ChatController::class, 'sendMessage']);
+    // Route::get('/chat/{roomId}', function ($roomId) {
+    //     $room = ChatRoom::findOrFail($roomId);
+    //     $messages = Message::where('chat_room_id', $roomId)->with('user')->orderBy('created_at')->get();
+    //     return view('dashboard.chat.index', compact('room', 'messages'));
+    // });
+
+      Route::get('/chat/{roomId}', function ($roomId) {
+        // $room = ChatRoom::findOrFail($roomId);
+        // $messages = Message::where('chat_room_id', $roomId)->with('user')->orderBy('created_at')->get();
+        // return view('dashboard.chat.index', compact('room', 'messages'));
+         $rooms = ChatRoom::all();  // ✅ Fetch all chat rooms for sidebar
+        $currentRoom = ChatRoom::findOrFail($roomId);  // ✅ Current active room
+        $messages = Message::where('chat_room_id', $roomId)->with('user')->get();  // ✅ Messages in current room
+         return view('dashboard.chat.index', compact('rooms', 'currentRoom', 'messages'));
+    });
+     
+
+   
  });

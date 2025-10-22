@@ -38,11 +38,37 @@
                         {{ session('success') }}
                     </div>
                     @endif
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <!-- <div class="col-md-4">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search">
+                            <button type="submit" class="btn btn-primary">Search</button>
+
+                        </div> -->
+                        <div class="row">
+                            <form method="GET" action="{{ route('admin-product-list') }}" class="row">
+                                <div>
+                                    <input type="text" name="search" class="form-control" placeholder="Search..."
+                                        value="{{ request('search') }}">
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary p-0">
+                                    @if(request('search'))
+                                        <!-- Display Cancel Icon -->
+                                        <i class="icon-cross"></i>
+                                    @else
+                                        <!-- Display Search Icon -->
+                                        <i class="icon-search"></i>
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
                     <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <p class="card-title mb-0">Products</p>
+                                    <!-- <p class="card-title mb-0">Products</p> -->
                                     <div class="table-responsive">
                                         <table class="table table-striped table-borderless">
                                             <thead>

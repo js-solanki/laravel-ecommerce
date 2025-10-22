@@ -29,4 +29,4 @@
 <script src="{{ asset('dashboard/js/typeahead.js') }}"></script>
 
 <!-- End custom js for this page-->
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
